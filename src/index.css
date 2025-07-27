@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.movies-bg {
+    background-image: url(/addMovieBg.jpg);
+    @apply bg-no-repeat bg-cover bg-center relative flex justify-center items-center
+}
+
+.movies-bg::after {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.8);
+    @apply fixed top-0 left-0 w-full h-full
+}
+
+.movie-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    @apply w-8/12 p-4  rounded-2xl relative z-10
+}
+
+/* text editor */
+.ProseMirror {
+    min-height: 200px;
+    margin: auto;
+    outline: none;
+}
+
+.tiptap {
+    :first-child {
+        margin-top: 0;
+    }
+
+    /* Lists */
+    ul,
+    ol {
+        padding-left: 1.25rem;
+        margin: 1.25rem 0;
+
+        li {
+            margin-bottom: 0.5rem;
+            color: gray;
+            list-style-position: outside;
+
+            p {
+                margin-top: 0.25em;
+                margin-bottom: 0.25em;
+            }
+        }
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    /* Headings */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1.2;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        text-wrap: pretty;
+        color: gray;
+        /* gray-800 */
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-top: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        margin-top: 2rem;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-size: 1rem;
+    }
+
+    /* Inline code */
+    code {
+        background-color: #f3f4f6;
+        /* gray-100 */
+        border-radius: 0.3rem;
+        color: #111827;
+        /* gray-900 */
+        font-size: 0.875rem;
+        padding: 0.2em 0.4em;
+    }
+
+    /* Code blocks */
+    pre {
+        background: gray;
+        /* gray-800 */
+        border-radius: 0.5rem;
+        color: #f9fafb;
+        /* gray-50 */
+        font-family: 'JetBrainsMono', monospace;
+        margin: 1.5rem 0;
+        padding: 0.75rem 1rem;
+        overflow-x: auto;
+
+        code {
+            background: none;
+            color: inherit;
+            font-size: 0.8rem;
+            padding: 0;
+        }
+    }
+
+    /* Blockquote */
+    blockquote {
+        border-left: 4px solid #d1d5db;
+        /* gray-300 */
+        margin: 1.5rem 0;
+        padding-left: 1rem;
+        color: #6b7280;
+        /* gray-500 */
+        font-style: italic;
+        background-color: #f9fafb;
+        /* gray-50 */
+        border-radius: 0.25rem;
+    }
+
+    /* Horizontal Rule */
+    hr {
+        border: none;
+        border-top: 1px solid #e5e7eb;
+        /* gray-200 */
+        margin: 2rem 0;
+    }
+
+    a {
+        color: #3b82f6;
+        /* blue-500 */
+        text-decoration: underline;
+    }
+}
