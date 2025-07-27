@@ -26,7 +26,7 @@ const Home = () => {
                                 <Link to={"/add-movie"} className="bg-orange-600 hover:bg-orange-700 px-8 py-4 rounded-2xl text-lg font-semibold shadow-md shadow-orange-500/40 transition duration-300">
                                     Start Collecting
                                 </Link>
-                                <Link to={"/dashboard"} className="border border-orange-500 text-orange-400 hover:bg-orange-600 hover:text-white px-8 py-4 rounded-2xl text-lg font-semibold transition duration-300">
+                                <Link to={"/browse-movies"} className="border border-orange-500 text-orange-400 hover:bg-orange-600 hover:text-white px-8 py-4 rounded-2xl text-lg font-semibold transition duration-300">
                                     Browse Movies
                                 </Link>
                             </div>
