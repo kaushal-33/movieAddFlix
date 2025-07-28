@@ -3,17 +3,42 @@ import { useEffect, useState } from "react"
 import TextEditor from "../components/TextEditor"
 import axios from "axios"
 import { toast } from "react-toastify"
-import { Link, useNavigate } from "react-router"
+import { Link, useNavigate, useParams } from "react-router"
 
-const AddMovie = () => {
+const UpdateMovie = () => {
 
     const [inputs, setInputs] = useState({ name: "", url: "", genre: "", rating: "0.5", description: "" })
-    const [isUpdate, setIsUpdate] = useState(false)
     const navigate = useNavigate();
+    const { id } = useParams();
     let handleChange = (e) => { setInputs({ ...inputs, [e.target.name]: e.target.value }) }
     useEffect(() => {
-
-    }, [isUpdate])
+        (async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/users");
+                const { data } = res;
+                setInputs(data.find((movie) => movie.id === id))
+            } catch (error) {
+                console.error("Failed to fetch movies:", error);
+            }
+        })()
+    }, [])
+    async function handleSubmit(e) {
+        e.preventDefault();
+        if (Object.values(inputs).some(value => value === "")) {
+            toast.error("Fill all the Input fields...!");
+            return;
+        }
+        try {
+            const response = await axios.put(`http://localhost:5000/users/${id}`, inputs);
+            setInputs({ name: "", url: "", genre: "", rating: 0.5, description: "" })
+            console.log(response.data);
+            toast.success("Movied updated successfully...!")
+            navigate("/browse-movies")
+        } catch (error) {
+            console.log(error)
+            toast.error("Due to some internal error, movie not updated...!")
+        }
+    }
     const selectStyles = {
         color: 'gray',
         '&:before': {
@@ -24,24 +49,6 @@ const AddMovie = () => {
         },
     }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        if (Object.values(inputs).some(value => value === "")) {
-            toast.error("Fill all the Input fields...!");
-            return;
-        }
-        try {
-            const response = await axios.post("http://localhost:5000/users", inputs);
-            setInputs({ name: "", url: "", genre: "", rating: 0.5, description: "" })
-            console.log(response.data);
-            toast.success("New movied added...!")
-            navigate("/browse-movies")
-        } catch (error) {
-            console.log(error);
-            toast.error("Due to some internal error, movie not added...!")
-        }
-    }
-
     return (
         <section className="movies-bg">
             <div className="movie-container my-12">
@@ -49,7 +56,7 @@ const AddMovie = () => {
                     <Link to={"/"}>
                         <img src="/LOGO.png" alt="LOGO" width={100} />
                     </Link>
-                    <h2 className="uppercase font-bold text-end font-mono text-4xl text-orange-600">add movie</h2>
+                    <h2 className="uppercase font-bold text-end font-mono text-4xl text-orange-600">update movie</h2>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap items-center">
@@ -132,7 +139,7 @@ const AddMovie = () => {
                         <TextEditor value={inputs.description} onChange={handleChange} />
                     </div>
                     <div className="mt-5 text-end">
-                        <Button color="warning" variant="contained" onClick={handleSubmit}>Submit</Button>
+                        <Button color="warning" variant="contained" onClick={handleSubmit}>update</Button>
                     </div>
                 </form>
             </div>
@@ -140,4 +147,4 @@ const AddMovie = () => {
     )
 }
 
-export default AddMovie
+export default UpdateMovie

@@ -15,7 +15,7 @@
 
 .movie-container {
     background-color: rgba(0, 0, 0, 0.6);
-    @apply lg:w-8/12 w-full p-4  rounded-2xl relative z-10
+    @apply lg:w-8/12 w-full p-4 rounded-2xl relative z-10
 }
 
 /* text editor */
@@ -152,4 +152,28 @@
         /* blue-500 */
         text-decoration: underline;
     }
+}
+
+/* scrollbar */
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: orange;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: orangered;
+    cursor: all-scroll;
 }
