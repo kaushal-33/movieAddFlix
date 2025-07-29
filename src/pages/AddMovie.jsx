@@ -1,5 +1,5 @@
 import { InputLabel, MenuItem, Select, TextField, FormControl, Typography, Rating, Button } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TextEditor from "../components/TextEditor"
 import axios from "axios"
 import { toast } from "react-toastify"
@@ -8,12 +8,8 @@ import { Link, useNavigate } from "react-router"
 const AddMovie = () => {
 
     const [inputs, setInputs] = useState({ name: "", url: "", genre: "", rating: "0.5", description: "" })
-    const [isUpdate, setIsUpdate] = useState(false)
     const navigate = useNavigate();
     let handleChange = (e) => { setInputs({ ...inputs, [e.target.name]: e.target.value }) }
-    useEffect(() => {
-
-    }, [isUpdate])
     const selectStyles = {
         color: 'gray',
         '&:before': {

@@ -1,6 +1,10 @@
 import {
     Table, TableBody, TableCell, TableHead, TableRow,
-    Paper, Button, Rating, Chip
+    Paper, Button, Rating, Chip,
+    DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogActions,
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -18,10 +22,15 @@ const GENRES = {
 
 const DisplayMovie = () => {
     const [movies, setMovies] = useState([]);
+    const [openMovie, setOpenMovie] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
         fetchMovies();
     }, []);
+    const handleViewMovie = (movie) => {
+        setOpenMovie(movie);
+    };
+    const handleCloseMovie = () => setOpenMovie(null);
     const fetchMovies = async () => {
         try {
             const res = await axios.get("http://localhost:5000/users");
@@ -139,6 +148,7 @@ const DisplayMovie = () => {
                                                     size="small"
                                                     variant="outlined"
                                                     color="warning"
+                                                    onClick={() => handleViewMovie(movie)}
                                                 >
                                                     View
                                                 </Button>
@@ -196,6 +206,71 @@ const DisplayMovie = () => {
                     `}
                 </style>
             </div>
+            <Dialog
+                open={!!openMovie}
+                onClose={handleCloseMovie}
+                maxWidth="sm"
+                fullWidth
+                PaperProps={{
+                    className: "bg-[#1a1a1a] rounded-lg",
+                    style: { padding: 0, background: "#222" }
+                }}
+            >
+                <DialogTitle className="flex justify-between items-center px-6 pt-6 pb-2 bg-[#282828] text-orange-400 capitalize text-2xl font-bold">
+                    <span>{openMovie?.name}</span>
+                </DialogTitle>
+                <DialogContent className="px-6 !py-5 !flex !flex-col md:!flex-row !gap-6 items-start bg-[#1a1a1a]">
+                    <img
+                        src={openMovie?.url || "/noImage.png"}
+                        onError={e => (e.target.src = "/noImage.png")}
+                        alt={openMovie?.name}
+                        className="rounded-lg shadow-md w-full max-w-[180px] md:max-w-[220px] object-contain border border-gray-700 mx-auto md:mx-0"
+                    />
+                    <div className="flex-1 space-y-3 mt-4 md:mt-0 w-full">
+                        <div>
+                            <span className="block font-bold text-gray-400 mb-1">Genre:</span>
+                            <Chip
+                                label={GENRES[openMovie?.genre] || "Unknown"}
+                                color="warning"
+                                variant="filled"
+                                className="capitalize"
+                            />
+                        </div>
+                        <div>
+                            <span className="block font-bold text-gray-400 mb-1">Rating:</span>
+                            <span className="inline-flex items-center gap-2">
+                                <Rating
+                                    value={openMovie?.rating}
+                                    readOnly
+                                    precision={0.5}
+                                    size="medium"
+                                    sx={{ "& .MuiRating-iconEmpty": { color: "gray" }, color: "#ff9800" }}
+                                />
+                                <span className="text-orange-400 text-sm font-semibold">
+                                    {openMovie?.rating}
+                                </span>
+                            </span>
+                        </div>
+                        <div>
+                            <span className="block font-bold text-gray-400 mb-1">Description:</span>
+                            <p className="text-gray-200 text-base font-mono">
+                                {(openMovie?.description || "").replace(/<[^>]*>?/gm, " ") || "No description provided."}
+                            </p>
+                        </div>
+                        <div>
+                            <span className="block font-bold text-gray-400 mb-1">Release Year:</span>
+                            <span className="text-gray-100 font-semibold">
+                                {openMovie?.releaseYear || "NA"}
+                            </span>
+                        </div>
+                    </div>
+                </DialogContent>
+                <DialogActions className="px-6 pb-4 pt-2 bg-[#1a1a1a] flex justify-end">
+                    <Button onClick={handleCloseMovie} color="warning" variant="contained">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </section>
     );
 };
