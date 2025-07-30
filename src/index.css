@@ -152,6 +152,9 @@
         /* blue-500 */
         text-decoration: underline;
     }
+    p{
+        color: white;
+    }
 }
 
 /* scrollbar */

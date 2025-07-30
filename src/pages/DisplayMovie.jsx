@@ -253,9 +253,8 @@ const DisplayMovie = () => {
                         </div>
                         <div>
                             <span className="block font-bold text-gray-400 mb-1">Description:</span>
-                            <p className="text-gray-200 text-base font-mono">
-                                {(openMovie?.description || "").replace(/<[^>]*>?/gm, " ") || "No description provided."}
-                            </p>
+                            <div className="tiptap font-mono" dangerouslySetInnerHTML={{ __html: openMovie?.description }}>
+                            </div>
                         </div>
                         <div>
                             <span className="block font-bold text-gray-400 mb-1">Release Year:</span>
